@@ -6,11 +6,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 const theme = createTheme();
 
 addDecorator(storyFn => (
-  <CssBaseline>
+  <React.Fragment>
+    <CssBaseline />
     <ThemeProvider theme={theme}>
       {storyFn()}
     </ThemeProvider>
-  </CssBaseline>
+  </React.Fragment>
 ));
 
 function loadStories() {
