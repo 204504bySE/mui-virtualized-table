@@ -5,11 +5,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 const theme = createTheme();
 
 export const decorators = [
-  (storyFn) => (
+  (Story) => (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        {storyFn()}
+        <Story />
       </ThemeProvider>
     </React.Fragment>
   )
