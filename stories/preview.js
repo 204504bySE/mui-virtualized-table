@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, addDecorator } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -13,9 +13,3 @@ addDecorator(storyFn => (
     </ThemeProvider>
   </React.Fragment>
 ));
-
-function loadStories() {
-  require('../stories/basic');
-}
-
-configure(loadStories, module);
