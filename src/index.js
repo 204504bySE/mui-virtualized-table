@@ -367,7 +367,7 @@ const useCellRenderer = ({
   return { cellRenderer, columnWidth: getColumnWidth };
 };
 
-export default function MuiTable({
+export default function MuiVirtualizedTable({
   data,
   columns,
   width,
@@ -489,7 +489,7 @@ export default function MuiTable({
   );
 }
 
-MuiTable.propTypes = {
+MuiVirtualizedTable.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array,
   width: PropTypes.number,

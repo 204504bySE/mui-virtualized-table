@@ -3,19 +3,19 @@ import { storiesOf } from '@storybook/react';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import Component from '@reactions/component';
 import Checkbox from '@mui/material/Checkbox';
-import MuiTable from '../src';
+import MuiVirtualizedTable from '../src';
 import { createPersonData, createDessertData } from './data';
 import { withStyles } from '@mui/styles';
 
 storiesOf('Basic', module)
   .add('default (empty)', () => (
-    <MuiTable width={500} style={{ backgroundColor: 'white' }} />
+    <MuiVirtualizedTable width={500} style={{ backgroundColor: 'white' }} />
   ))
 
   .add('simple', () => {
     const data = createPersonData(5);
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[{ name: 'firstName' }, { name: 'lastName' }]}
         width={500}
@@ -28,7 +28,7 @@ storiesOf('Basic', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[{ name: 'firstName' }, { name: 'lastName' }]}
             width={width}
@@ -44,7 +44,7 @@ storiesOf('Basic', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -70,7 +70,7 @@ storiesOf('Basic', module)
   .add('include headers', () => {
     const data = createPersonData(5);
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[{ name: 'firstName' }, { name: 'lastName' }]}
         includeHeaders={true}
@@ -83,7 +83,7 @@ storiesOf('Basic', module)
   .add('custom headers', () => {
     const data = createPersonData(5);
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           { name: 'firstName', header: 'First Name' },
@@ -102,7 +102,7 @@ storiesOf('Basic', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -132,7 +132,7 @@ storiesOf('Basic', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -163,7 +163,7 @@ storiesOf('Basic', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -194,7 +194,7 @@ storiesOf('Basic', module)
     const orderBy = 'FullName desc';
     const [orderProp, orderDirection] = orderBy;
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -227,7 +227,7 @@ storiesOf('Basic', module)
     const orderBy = 'FullName desc';
     const [orderProp, orderDirection] = orderBy;
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -260,7 +260,7 @@ storiesOf('Basic', module)
     const orderBy = 'FullName desc';
     const [orderProp, orderDirection] = orderBy;
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -295,7 +295,7 @@ storiesOf('Basic', module)
   .add('text overflow', () => {
     const data = createPersonData(10);
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -321,7 +321,7 @@ storiesOf('Basic', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               { name: 'firstName', header: 'First Name' },
@@ -367,7 +367,7 @@ storiesOf('Basic', module)
     })(props => (
       <AutoSizer>
         {({ width }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             classes={{ cellClickable: props.classes.cellClickable }}
             columns={[
@@ -409,7 +409,7 @@ storiesOf('Basic', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               { name: 'firstName', header: 'First Name' },
@@ -485,7 +485,7 @@ storiesOf('Column widths', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -514,7 +514,7 @@ storiesOf('Column widths', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -543,7 +543,7 @@ storiesOf('Column widths', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -573,7 +573,7 @@ storiesOf('Column widths', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 {
@@ -602,7 +602,7 @@ storiesOf('Column widths', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[
                 { name: 'jobTitle', header: 'Job Title' },
@@ -636,7 +636,7 @@ storiesOf('maxHeight', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -662,7 +662,7 @@ storiesOf('maxHeight', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -689,7 +689,7 @@ storiesOf('maxHeight', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -798,7 +798,7 @@ storiesOf('Hover', module)
   .add('row', () => {
     const data = createDessertData();
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -831,7 +831,7 @@ storiesOf('Hover', module)
   .add('column', () => {
     const data = createDessertData();
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -864,7 +864,7 @@ storiesOf('Hover', module)
   .add('both', () => {
     const data = createDessertData();
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={data}
         columns={[
           {
@@ -902,7 +902,7 @@ storiesOf('Selected', module)
     return (
       <Component initialState={{ selectedRowIds: [] }}>
         {({ state, setState }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -960,7 +960,7 @@ storiesOf('Selected', module)
     return (
       <Component initialState={{ selectedRowIds: [] }}>
         {({ state, setState }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -1021,7 +1021,7 @@ storiesOf('Selected', module)
     return (
       <Component initialState={{ selectedRowIds: [] }}>
         {({ state, setState }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -1115,7 +1115,7 @@ storiesOf('Performance', module)
     return (
       <AutoSizer>
         {({ width }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[{ name: 'firstName' }, { name: 'lastName' }]}
             width={width}
@@ -1131,7 +1131,7 @@ storiesOf('Performance', module)
     return (
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[{ name: 'firstName' }, { name: 'lastName' }]}
             width={width}
@@ -1149,7 +1149,7 @@ storiesOf('Performance', module)
       <div style={{ height: 'calc(100vh)' }}>
         <AutoSizer>
           {({ width, height }) => (
-            <MuiTable
+            <MuiVirtualizedTable
               data={data}
               columns={[{ name: 'firstName' }, { name: 'lastName' }]}
               width={width}
@@ -1168,7 +1168,7 @@ storiesOf('Resizable Columns', module).add('Simple table', () => {
     <div style={{ height: 'calc(100vh)' }}>
       <AutoSizer>
         {({ width, height }) => (
-          <MuiTable
+          <MuiVirtualizedTable
             data={data}
             columns={[
               {
@@ -1296,7 +1296,7 @@ class PaginatedTable extends React.Component {
     const pageData = data && data.slice(start, start + perPage);
 
     return (
-      <MuiTable
+      <MuiVirtualizedTable
         data={pageData}
         pagination={{
           count: data ? data.length : 0,
