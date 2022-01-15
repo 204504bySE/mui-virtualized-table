@@ -26,11 +26,12 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.text.secondary,
       fontSize: theme.typography.pxToRem(12),
 
-      // Hide scrollbars on Chrome/Safari/IE
-      '&::-webkit-scrollbar': {
+      // Hide scrollbars
+      '&::-webkit-scrollbar': { //Chrome/Safari
         display: 'none'
       },
-      '-ms-overflow-style': 'none'
+      'scrollbar-width': 'none',  //Firefox
+      '-ms-overflow-style': 'none'  //IE
     },
 
     '& .topRightGrid': {
@@ -40,11 +41,12 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.text.secondary,
       fontSize: theme.typography.pxToRem(12),
 
-      // Hide scrollbars on Chrome/Safari/IE
-      '&::-webkit-scrollbar': {
+      // Hide scrollbars
+      '&::-webkit-scrollbar': { //Chrome/Safari
         display: 'none'
       },
-      '-ms-overflow-style': 'none'
+      'scrollbar-width': 'none',  //Firefox
+      '-ms-overflow-style': 'none'  //IE
     },
 
     '& .bottomLeftGrid': {
@@ -54,11 +56,12 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.text.secondary,
       fontSize: theme.typography.pxToRem(13),
 
-      // Hide scrollbars on Chrome/Safari/IE
-      '&::-webkit-scrollbar': {
+      // Hide scrollbars
+      '&::-webkit-scrollbar': { //Chrome/Safari
         display: 'none'
       },
-      '-ms-overflow-style': 'none'
+      'scrollbar-width': 'none',  //Firefox
+      '-ms-overflow-style': 'none'  //IE
     },
 
     '& .bottomRightGrid': {
