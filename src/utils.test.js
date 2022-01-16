@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { calcColumnWidth } from './utils';
 
 describe('calcColumnWidth', () => {

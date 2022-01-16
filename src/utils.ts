@@ -1,4 +1,19 @@
-export function calcColumnWidth(index, columns, tableWidth) {
+import { ReactNode } from "react";
+
+export type Column = {
+  name: string,
+  header?: ReactNode,
+  onHeaderClick: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
+  width?: number,
+  minWidth?: number,
+  cell?: (rowData: {[key: string]: any}) => ReactNode
+  onClick: any
+  cellProps: any,
+  orderBy?: string,
+  resizable?: Boolean
+};
+
+export function calcColumnWidth(index: number, columns: Column[], tableWidth: number) {
   const column = columns[index];
 
   let width = getDeterministicColumnWidth(column, tableWidth);
@@ -19,10 +34,10 @@ export function calcColumnWidth(index, columns, tableWidth) {
   const initialDistributedWidthPerColumn =
     (tableWidth - totalAllocatedWidth) / variableWidthColumns.length;
   const activeMinWidthColumns = variableWidthColumns.filter(
-    c => (c.minWidth > initialDistributedWidthPerColumn ? c.minWidth : 0)
+    c => ((c.minWidth ?? 0) > initialDistributedWidthPerColumn ? c.minWidth : 0)
   );
   const allocatedMinWidth = activeMinWidthColumns.reduce(
-    (result, c) => result + c.minWidth,
+    (result, c) => result + (c.minWidth ?? 0),
     0
   );
   const remainingWidth = tableWidth - totalAllocatedWidth - allocatedMinWidth;
@@ -34,7 +49,7 @@ export function calcColumnWidth(index, columns, tableWidth) {
   );
 }
 
-function getDeterministicColumnWidth(column, tableWidth) {
+function getDeterministicColumnWidth(column: Column, tableWidth: number) {
   if (typeof column.width === 'number') {
     // Fixed width
     return column.width;
@@ -48,6 +63,6 @@ function getDeterministicColumnWidth(column, tableWidth) {
   }
 }
 
-function percentToFixedWidth(percentAsString, tableWidth) {
+function percentToFixedWidth(percentAsString: string, tableWidth: number) {
   return (parseFloat(percentAsString) / 100) * tableWidth;
 }

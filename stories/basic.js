@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import Component from '@reactions/component';
 import Checkbox from '@mui/material/Checkbox';
-import MuiVirtualizedTable from '../src';
+import MuiVirtualizedTable from '../dist/index.js';
 import { createPersonData, createDessertData } from './data';
 import { withStyles } from '@mui/styles';
 

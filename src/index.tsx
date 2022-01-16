@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MultiGrid from 'react-virtualized/dist/commonjs/MultiGrid';
+import MultiGrid, { MultiGridProps } from 'react-virtualized/dist/commonjs/MultiGrid';
 import classNames from 'classnames';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
+import TablePagination, { TablePaginationProps } from '@mui/material/TablePagination';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { useTheme } from '@mui/material/styles';
+import { Theme, useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import Draggable from 'react-draggable';
-import { calcColumnWidth } from './utils';
+import { calcColumnWidth, Column } from './utils';
 
 const FOOTER_BORDER_HEIGHT = 1;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   table: {
     boxSizing: 'border-box',
 
     '& .topLeftGrid': {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'dark' ? 800 : 200],
+        theme.palette.grey[theme.palette.mode === 'dark' ? 800 : 200],
       borderBottom: `2px solid ${theme.palette.divider}`,
       borderRight: `2px solid ${theme.palette.divider}`,
       color: theme.palette.text.secondary,
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 
     '& .topRightGrid': {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'dark' ? 800 : 200],
+        theme.palette.grey[theme.palette.mode === 'dark' ? 800 : 200],
       borderBottom: `2px solid ${theme.palette.divider}`,
       color: theme.palette.text.secondary,
       fontSize: theme.typography.pxToRem(12),
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
     '& .bottomLeftGrid': {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'dark' ? 800 : 200],
+        theme.palette.grey[theme.palette.mode === 'dark' ? 800 : 200],
       borderRight: `2px solid ${theme.palette.divider}`,
       color: theme.palette.text.secondary,
       fontSize: theme.typography.pxToRem(13),
@@ -80,11 +80,11 @@ const useStyles = makeStyles(theme => ({
   },
   cellSelected: {
     backgroundColor:
-      theme.palette.grey[theme.palette.type === 'dark' ? 900 : 100]
+      theme.palette.grey[theme.palette.mode === 'dark' ? 900 : 100]
   },
   cellHovered: {
     backgroundColor:
-      theme.palette.grey[theme.palette.type === 'dark' ? 800 : 200]
+      theme.palette.grey[theme.palette.mode === 'dark' ? 800 : 200]
   },
   cellDisabled: {
     opacity: 0.5
@@ -128,11 +128,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const calculateWidths = ({ resizable, columns: Columns }) => {
-  var widths = [];
+const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, columns: any[]}) => {
+  var widths: {[key: string]: number} = {};
   if (resizable) {
     var initialWidth = 1;
-    var columns = [];
+    var columns: any[] = [];
     Columns.forEach(c => {
       if (c.width) {
         widths[c.name] = 0.1;
@@ -167,14 +167,35 @@ const useCellRenderer = ({
   onCellContextMenu,
   resizable,
   cellProps: defaultCellProps
+}: Pick<MultiGridProps, 'recomputeGridSize' | 'width' | 'columnWidth'
+> & {
+  includeHeaders: Boolean
+  data: {[key: string]: any}[],
+  columns: Column[],
+  isCellHovered?: (column: Column, rowData: {[key:string]: any}, hoveredColumn: Column, hoveredRowData: {[key:string]: any}) => Boolean,
+  isCellSelected?: (column: Column, rowData: {[key:string]: any}) => Boolean,
+  isCellDisabled?: (column: Column, rowData: {[key:string]: any}) => Boolean,
+  classes: any,
+  orderBy?: string,
+  orderDirection?: 'desc' | 'asc',
+  onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
+  onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+  onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+  onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+  resizable: Boolean,
+  cellProps: any
 }) => {
-  const [{ hoveredColumn, hoveredRowData }, setHovered] = React.useState({
+  const [{ hoveredColumn, hoveredRowData }, setHovered] = React.useState<{
+    hoveredColumn: null | Column,
+    hoveredRowData: null | {[key: string]: any}
+  }>
+  ({
     hoveredColumn: null,
     hoveredRowData: null
   });
 
   const [widths, setWidths] = React.useState(
-    calculateWidths({ resizable, columns })
+    calculateWidths({resizable, columns})
   );
 
   React.useEffect(() => {
@@ -187,9 +208,9 @@ const useCellRenderer = ({
   );
 
   const getColumnWidth = React.useCallback(
-    ({ index }) =>
+    ({ index }: {index: number}) =>
       typeof columnWidth === 'function'
-        ? columnWidth({ index, columns, width })
+        ? columnWidth({ index })
         : resizable
         ? resizableColumnWidths(index, columns, width)
         : calcColumnWidth(index, columns, width),
@@ -197,7 +218,7 @@ const useCellRenderer = ({
   );
 
   const resizeRow = React.useCallback(
-    ({ dataKey, deltaX }) =>
+    ({ dataKey, deltaX }: {dataKey: string, deltaX: number}) =>
       setWidths(prev => {
         const delta = deltaX / width;
         const index = columns.findIndex(c => c.name === dataKey);
@@ -212,7 +233,7 @@ const useCellRenderer = ({
   );
 
   const handleDrag = React.useCallback(
-    dataKey => (event, { deltaX }) =>
+    dataKey => (event: any, { deltaX }: {deltaX: number}) =>
       resizeRow({
         dataKey,
         deltaX
@@ -221,7 +242,7 @@ const useCellRenderer = ({
   );
 
   const handleMouse = React.useCallback(
-    (hoveredColumn, hoveredRowData) => e =>
+    (hoveredColumn: null | Column, hoveredRowData: null | {[key: string]: any}) => (e: React.MouseEvent<HTMLTableCellElement>) =>
       setHovered({
         hoveredColumn,
         hoveredRowData
@@ -229,7 +250,7 @@ const useCellRenderer = ({
     [setHovered]
   );
 
-  const cellRenderer = ({ columnIndex, rowIndex, key, style }) => {
+  const cellRenderer = ({ columnIndex, rowIndex, key, style }: {columnIndex: number, rowIndex: number, key: string, style: React.CSSProperties}) => {
     const column = columns[columnIndex];
     const isHeader = includeHeaders && rowIndex === 0;
     const headerOffset = includeHeaders ? 1 : 0;
@@ -244,12 +265,12 @@ const useCellRenderer = ({
       isCellHovered &&
       isCellHovered(column, rowData, hoveredColumn, hoveredRowData);
 
-    const resolveCellProps = cellProps =>
+    const resolveCellProps = (cellProps: any) =>
       typeof cellProps === 'function'
         ? cellProps(column, rowData, hoveredColumn, hoveredRowData)
         : cellProps;
     // TODO: Deep merge (do not override all defaultCellProps styles if column.cellProps.styles defined?)
-    const { style: cellStyle, ...cellProps } = {
+    const { style: cellStyle, ...cellProps }: any = {
       ...resolveCellProps(defaultCellProps),
       ...resolveCellProps(column.cellProps)
     };
@@ -272,7 +293,7 @@ const useCellRenderer = ({
               defaultClassName={classes.dragHandle}
               defaultClassNameDragging={classes.DragHandleActive}
               onDrag={handleDrag(column.name)}
-              position={{ x: 0 }}
+              position={{ x: 0, y: 0 }}
             >
               <span className={classes.DragHandleIcon}>⋮</span>
             </Draggable>
@@ -330,7 +351,7 @@ const useCellRenderer = ({
         (column.onHeaderClick || onHeaderClick) ? (
           <TableSortLabel
             active={
-              orderBy &&
+              !!orderBy &&
               (orderBy === column.name || orderBy === column.orderBy) &&
               rowIndex === 0
             }
@@ -339,7 +360,7 @@ const useCellRenderer = ({
             onClick={event =>
               column.onHeaderClick
                 ? column.onHeaderClick(event, { column })
-                : onHeaderClick(event, { column })
+                : onHeaderClick && onHeaderClick(event, { column })
             }
           >
             {contents}
@@ -352,7 +373,7 @@ const useCellRenderer = ({
               defaultClassName='DragHandle'
               defaultClassNameDragging='DragHandleActive'
               onDrag={handleDrag(column.name)}
-              position={{ x: 0 }}
+              position={{ x: 0, y: 0 }}
             >
               <span className='DragHandleIcon'>⋮</span>
             </Draggable>
@@ -372,7 +393,7 @@ export default function MuiVirtualizedTable({
   columns,
   width,
   height,
-  maxHeight = null,
+  maxHeight,
   pagination,
   fitHeightToRows,
   fixedRowCount = 0,
@@ -394,11 +415,15 @@ export default function MuiVirtualizedTable({
   resizable,
   cellProps,
   ...other
+}: MultiGridProps & {
+  data: {[key: string]: any}[],
+  columns: Column[],
+  pagination: TablePaginationProps,
 }) {
   const classes = useStyles({ classes: Classes });
   const theme = useTheme();
 
-  const multiGrid = React.useRef(null);
+  const multiGrid = React.useRef<MultiGrid>(null);
 
   const recomputeGridSize = React.useCallback(
     () => multiGrid.current && multiGrid.current.recomputeGridSize(),
@@ -416,15 +441,15 @@ export default function MuiVirtualizedTable({
     const rowCount =
       pagination.rowsPerPage +
       (fixedRowCount ? fixedRowCount : includeHeaders ? 1 : 0);
-    calculatedHeight = rowCount * rowHeight;
+    calculatedHeight = rowCount * (rowHeight as number);
   } else if (Array.isArray(data)) {
     const rowCount =
       data.length + (fixedRowCount ? fixedRowCount : includeHeaders ? 1 : 0);
-    calculatedHeight = rowCount * rowHeight;
+    calculatedHeight = rowCount * (rowHeight as number);
   }
 
   const paginationHeight =
-    theme.mixins.toolbar.minHeight + FOOTER_BORDER_HEIGHT;
+    Number(theme?.mixins.toolbar.minHeight ?? 0) + FOOTER_BORDER_HEIGHT;
 
   const calculatedHeightWithFooter =
     calculatedHeight + (pagination ? paginationHeight : 0);
@@ -434,12 +459,15 @@ export default function MuiVirtualizedTable({
       : calculatedHeightWithFooter;
   const multiGridHeight = containerHeight - (pagination ? paginationHeight : 0);
 
+  const columnCount = Array.isArray(columns) ? columns.length : 0;
+  const rowCount = Array.isArray(data) ? data.length + (includeHeaders ? 1 : 0) : 0;
+
   return (
     <Table
       component='div'
       style={{ width, height: containerHeight, ...style }}
       className={classes.table}
-      {...other}
+      {...other as any}
     >
       <MultiGrid
         {...useCellRenderer({
@@ -460,7 +488,7 @@ export default function MuiVirtualizedTable({
           onCellDoubleClick,
           onCellContextMenu,
           resizable,
-          cellProps
+          cellProps,
         })}
         ref={multiGrid}
         width={width}
@@ -469,9 +497,7 @@ export default function MuiVirtualizedTable({
         enableFixedColumnScroll={fixedColumnCount > 0}
         height={multiGridHeight}
         rowHeight={rowHeight}
-        rowCount={
-          Array.isArray(data) ? data.length + (includeHeaders ? 1 : 0) : 0
-        }
+        rowCount={rowCount}
         fixedRowCount={fixedRowCount}
         enableFixedRowScroll={fixedRowCount > 0}
         // TODO: Read these from `classes` without classes.table inheritance?  How to pass props.classes down to override?
