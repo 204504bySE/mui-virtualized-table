@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
+export type RowDataType = {[key: string]: ReactNode} | ReactNode[]
+
 export type Column = {
   name: string,
   header?: ReactNode,
   onHeaderClick: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
   width?: number,
   minWidth?: number,
-  cell?: (rowData: {[key: string]: any}) => ReactNode
+  cell?: (rowData: RowDataType) => ReactNode
   onClick: any
   cellProps: any,
   orderBy?: string,

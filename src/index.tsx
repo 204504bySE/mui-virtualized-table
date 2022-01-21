@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import MultiGrid, { MultiGridProps } from 'react-virtualized/dist/commonjs/MultiGrid';
 import classNames from 'classnames';
@@ -10,7 +10,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { Theme, useTheme } from '@mui/material/styles';
 
 import Draggable from 'react-draggable';
-import { calcColumnWidth, Column } from './utils';
+import { calcColumnWidth, Column, RowDataType } from './utils';
 import { FOOTER_BORDER_HEIGHT, useDefaultStyles } from './style';
 
 
@@ -37,18 +37,18 @@ const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, c
 
 type CellRendererType = {
     includeHeaders: Boolean
-    data: {[key: string]: any}[],
+    data: RowDataType[],
     columns: Column[],
-    isCellHovered?: (column: Column, rowData: {[key:string]: any}, hoveredColumn: Column, hoveredRowData: {[key:string]: any}) => Boolean,
-    isCellSelected?: (column: Column, rowData: {[key:string]: any}) => Boolean,
-    isCellDisabled?: (column: Column, rowData: {[key:string]: any}) => Boolean,
+    isCellHovered?: (column: Column, rowData: RowDataType, hoveredColumn: Column, hoveredRowData: RowDataType) => Boolean,
+    isCellSelected?: (column: Column, rowData: RowDataType) => Boolean,
+    isCellDisabled?: (column: Column, rowData: RowDataType) => Boolean,
     classes: any,
     orderBy?: string,
     orderDirection?: 'desc' | 'asc',
     onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
-    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
-    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
-    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
+    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
+    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
     resizable: Boolean,
     cellProps: any 
 }
@@ -173,7 +173,9 @@ const useCellRenderer = ({
               : column.name
             : column.cell
             ? column.cell(rowData)
-            : rowData[column.name]}
+            : Array.isArray(rowData) 
+              ? rowData[columnIndex]
+              : rowData[column.name]}
         </span>
         <span style={{ float: 'right' }}>
           {isHeader && resizable && columnIndex < columns.length - 1 && (

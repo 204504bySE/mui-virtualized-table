@@ -16,6 +16,30 @@ export function createPersonData(count = 5) {
   return data;
 }
 
+export const PersonDataArrayColumns = [
+  'id',
+  'firstName',
+  'lastName',
+  'jobTitle',
+  'jobArea',
+  'jobType',
+];
+export function createPersonDataArray(count = 5) {
+  const data = [];
+  for (let i = 0; i < count; i++) {
+    data.push([
+      faker.random.number(),
+      faker.name.firstName(),
+      faker.name.lastName(),
+      faker.name.jobTitle(),
+      faker.name.jobArea(),
+      faker.name.jobType(),
+    ])
+  }
+
+  return data;
+}
+
 export function createDessertData() {
   const data = [
     { id: 1, name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3 },
