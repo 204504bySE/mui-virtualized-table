@@ -148,6 +148,24 @@ const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, c
   return widths;
 };
 
+type CellRendererType = {
+    includeHeaders: Boolean
+    data: {[key: string]: any}[],
+    columns: Column[],
+    isCellHovered?: (column: Column, rowData: {[key:string]: any}, hoveredColumn: Column, hoveredRowData: {[key:string]: any}) => Boolean,
+    isCellSelected?: (column: Column, rowData: {[key:string]: any}) => Boolean,
+    isCellDisabled?: (column: Column, rowData: {[key:string]: any}) => Boolean,
+    classes: any,
+    orderBy?: string,
+    orderDirection?: 'desc' | 'asc',
+    onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
+    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
+    resizable: Boolean,
+    cellProps: any 
+}
+
 const useCellRenderer = ({
   recomputeGridSize,
   columns,
@@ -168,23 +186,7 @@ const useCellRenderer = ({
   resizable,
   cellProps: defaultCellProps
 }: Pick<MultiGridProps, 'recomputeGridSize' | 'width' | 'columnWidth'
-> & {
-  includeHeaders: Boolean
-  data: {[key: string]: any}[],
-  columns: Column[],
-  isCellHovered?: (column: Column, rowData: {[key:string]: any}, hoveredColumn: Column, hoveredRowData: {[key:string]: any}) => Boolean,
-  isCellSelected?: (column: Column, rowData: {[key:string]: any}) => Boolean,
-  isCellDisabled?: (column: Column, rowData: {[key:string]: any}) => Boolean,
-  classes: any,
-  orderBy?: string,
-  orderDirection?: 'desc' | 'asc',
-  onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
-  onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
-  onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
-  onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: {[key:string]: any}, data: {[key:string]: any}[]}) => any),
-  resizable: Boolean,
-  cellProps: any
-}) => {
+> & CellRendererType) => {
   const [{ hoveredColumn, hoveredRowData }, setHovered] = React.useState<{
     hoveredColumn: null | Column,
     hoveredRowData: null | {[key: string]: any}
@@ -415,10 +417,8 @@ export default function MuiVirtualizedTable({
   resizable,
   cellProps,
   ...other
-}: MultiGridProps & {
-  data: {[key: string]: any}[],
-  columns: Column[],
-  pagination: TablePaginationProps,
+}: MultiGridProps & CellRendererType & {
+  pagination: TablePaginationProps,  
 }) {
   const classes = useStyles({ classes: Classes });
   const theme = useTheme();
