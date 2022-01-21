@@ -10,7 +10,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { Theme, useTheme } from '@mui/material/styles';
 
 import Draggable from 'react-draggable';
-import { calcColumnWidth, Column, RowDataType } from './utils';
+import { calcColumnWidth, Column, RowData } from './utils';
 import { FOOTER_BORDER_HEIGHT, useDefaultStyles } from './style';
 
 
@@ -37,18 +37,18 @@ const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, c
 
 type CellRendererType = {
     includeHeaders: Boolean
-    data: RowDataType[],
+    data: RowData[],
     columns: Column[],
-    isCellHovered?: (column: Column, rowData: RowDataType, hoveredColumn: Column, hoveredRowData: RowDataType) => Boolean,
-    isCellSelected?: (column: Column, rowData: RowDataType) => Boolean,
-    isCellDisabled?: (column: Column, rowData: RowDataType) => Boolean,
+    isCellHovered?: (column: Column, rowData: RowData, hoveredColumn: Column, hoveredRowData: RowData) => Boolean,
+    isCellSelected?: (column: Column, rowData: RowData) => Boolean,
+    isCellDisabled?: (column: Column, rowData: RowData) => Boolean,
     classes: any,
     orderBy?: string,
     orderDirection?: 'desc' | 'asc',
     onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
-    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
-    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
-    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowDataType, data: RowDataType[]}) => any),
+    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
+    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
+    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
     resizable: Boolean,
     cellProps: any 
 }
