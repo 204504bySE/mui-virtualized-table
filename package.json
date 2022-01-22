@@ -13,11 +13,11 @@
   "license": "MIT",
   "peerDependencies": {
     "@mui/material": "^5.0.0",
-    "react": "^17.0.0"
+    "@mui/styles": "^5.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   },
   "dependencies": {
-    "@mui/material": "^5.0.0",
-    "@mui/styles": "^5.0.0",
     "classnames": "^2.3.1",
     "prop-types": "^15.6.1",
     "react-draggable": "^4.2.0",
@@ -29,6 +29,8 @@
     "@babel/preset-react": "^7.16.7",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
     "@mui/types": "^7.1.0",
     "@reactions/component": "^2.0.2",
     "@storybook/react": "^6.4.13",
