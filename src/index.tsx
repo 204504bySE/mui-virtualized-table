@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import MultiGrid, { MultiGridProps } from 'react-virtualized/dist/commonjs/MultiGrid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableFooter from '@mui/material/TableFooter';
@@ -200,7 +200,7 @@ const useCellRenderer = ({
       hasCellContextMenu ||
       column.onClick;
 
-    const className = classNames(classes.cell, {
+    const className = clsx(classes.cell, {
       [classes.cellClickable]: isClickable,
       [classes.cellHovered]: isHovered,
       [classes.cellSelected]: isSelected,
