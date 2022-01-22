@@ -2,6 +2,7 @@ import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
 
 export const FOOTER_BORDER_HEIGHT = 1;
+
 export const useDefaultStyles = makeStyles((theme: Theme) => ({
   table: {
     boxSizing: 'border-box',

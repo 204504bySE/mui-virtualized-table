@@ -13,8 +13,6 @@ import Draggable from 'react-draggable';
 import { calcColumnWidth, Column, RowData } from './utils';
 import { FOOTER_BORDER_HEIGHT, useDefaultStyles } from './style';
 
-
-
 const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, columns: any[]}) => {
   var widths: {[key: string]: number} = {};
   if (resizable) {
@@ -291,7 +289,7 @@ export default function MuiVirtualizedTable({
   fixedColumnCount = 0,
   rowHeight = 48,
   style,
-  useStyles,
+  useStyles = useDefaultStyles,
   columnWidth,
   includeHeaders = false,
   isCellHovered,
@@ -310,7 +308,7 @@ export default function MuiVirtualizedTable({
 }: MultiGridProps & CellRendererType & {
   pagination: TablePaginationProps,  
 }) {
-  const classes = (useStyles ?? useDefaultStyles)({ classes: Classes });
+  const classes = useStyles({ classes: Classes });
   const theme = useTheme();
 
   const multiGrid = React.useRef<MultiGrid>(null);
