@@ -410,7 +410,7 @@ MuiVirtualizedTable.propTypes = {
   fitHeightToRows: PropTypes.bool,
   fixedRowCount: PropTypes.number,
   fixedColumnCount: PropTypes.number,
-  rowHeight: PropTypes.number,
+  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   columnWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   includeHeaders: PropTypes.bool,
   orderBy: PropTypes.string,
