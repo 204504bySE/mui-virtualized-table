@@ -5,17 +5,17 @@ export type RowData = {[key: string]: ReactNode} | ReactNode[]
 export type Column = {
   name: string,
   header?: ReactNode,
-  onHeaderClick: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
+  onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
   width?: number,
   minWidth?: number,
   cell?: (rowData: RowData) => ReactNode
-  onClick: any
-  cellProps: any,
+  onClick?: any
+  cellProps?: any,
   orderBy?: string,
   resizable?: Boolean
 };
 
-export function calcColumnWidth(index: number, columns: Column[], tableWidth: number) {
+export function calcColumnWidth(index: number, columns: Column[], tableWidth: number): number {
   const column = columns[index];
   if (!column) {
     return 0;

@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination, { TablePaginationProps } from '@mui/material/TablePagination';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { Theme, useTheme } from '@mui/material/styles';
+import { ClassNameMap, Theme, useTheme } from '@mui/material/styles';
 
 import Draggable from 'react-draggable';
 import { calcColumnWidth, Column, RowData } from './utils';
@@ -307,7 +307,8 @@ export default function MuiVirtualizedTable({
   cellProps,
   ...other
 }: MultiGridProps & CellRendererType & {
-  pagination: TablePaginationProps,  
+  pagination: TablePaginationProps,
+  useStyles: (props?: any) => ClassNameMap<"table" | "cell" | "cellClickable" | "cellSelected" | "cellHovered" | "cellDisabled" | "cellContents" | "cellHeader" | "cellInLastColumn" | "cellInLastRow" | "footer" | "dragHandle" | "DragHandleActive" | "DragHandleIcon">
 }) {
   const classes = useStyles({ classes: Classes });
   const theme = useTheme();
