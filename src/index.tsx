@@ -139,6 +139,7 @@ const useCellRenderer = ({
 
   const cellRenderer = ({ columnIndex, rowIndex, key, style }: {columnIndex: number, rowIndex: number, key: string, style: React.CSSProperties}) => {
     const column = columns[columnIndex];
+    if (!column) { return; }
     const isHeader = includeHeaders && rowIndex === 0;
     const headerOffset = includeHeaders ? 1 : 0;
     const rowData = (data && data[rowIndex - headerOffset]) || {};

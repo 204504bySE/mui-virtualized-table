@@ -17,6 +17,9 @@ export type Column = {
 
 export function calcColumnWidth(index: number, columns: Column[], tableWidth: number) {
   const column = columns[index];
+  if (!column) {
+    return 0;
+  }
 
   let width = getDeterministicColumnWidth(column, tableWidth);
 
