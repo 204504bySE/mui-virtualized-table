@@ -1,6 +1,6 @@
 {
-  "name": "mui-virtualized-table",
-  "version": "3.0.0-6",
+  "name": "mui-virtualized-table-mui5",
+  "version": "5.0.0",
   "description": "Material-UI table with windowing, row/column freezing, and more",
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -8,8 +8,8 @@
     "dist",
     "index.d.ts"
   ],
-  "repository": "https://github.com/techniq/mui-virtualized-table",
-  "author": "Sean Lynch <techniq35@gmail.com>",
+  "repository": "https://github.com/204504bySE/mui-virtualized-table",
+  "author": "204504bySE <204504byse@204504byse.info>",
   "license": "MIT",
   "peerDependencies": {
     "@mui/material": "^5.0.0",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
-    "prop-types": "^15.6.1",
-    "react-draggable": "^4.2.0",
-    "react-virtualized": "^9.21.2"
+    "prop-types": "^15.8.1",
+    "react-draggable": "^4.4.4",
+    "react-virtualized": "^9.22.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
