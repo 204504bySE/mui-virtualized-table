@@ -17,7 +17,6 @@
     "react-dom": "^17.0.0"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
     "prop-types": "^15.8.1",
     "react-draggable": "^4.4.4",
     "react-virtualized": "^9.22.3",

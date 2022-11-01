@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MultiGrid, { MultiGridProps } from 'react-virtualized/dist/commonjs/MultiGrid';
-import clsx from 'clsx';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableFooter from '@mui/material/TableFooter';
@@ -41,6 +40,7 @@ type CellRendererType = {
     isCellSelected?: (column: Column, rowData: RowData) => Boolean,
     isCellDisabled?: (column: Column, rowData: RowData) => Boolean,
     classes: any,
+    cx: any,
     orderBy?: string,
     orderDirection?: 'desc' | 'asc',
     onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
@@ -62,6 +62,7 @@ const useCellRenderer = ({
   isCellSelected,
   isCellDisabled,
   classes,
+  cx,
   orderBy,
   orderDirection,
   onHeaderClick,
@@ -201,7 +202,7 @@ const useCellRenderer = ({
       hasCellContextMenu ||
       column.onClick;
 
-    const className = clsx(classes.cell, {
+    const className = cx(classes.cell, {
       [classes.cellClickable]: isClickable,
       [classes.cellHovered]: isHovered,
       [classes.cellSelected]: isSelected,
@@ -310,7 +311,7 @@ export default function MuiVirtualizedTable({
   pagination: TablePaginationProps,
   useStyles: any
 }) {
-  const classes = useStyles({ classes: Classes });
+  const {classes, cx} = useStyles({ classes: Classes });
   const theme = useTheme();
 
   const multiGrid = React.useRef<MultiGrid>(null);
@@ -363,6 +364,7 @@ export default function MuiVirtualizedTable({
           columns,
           width,
           classes,
+          cx,
           includeHeaders,
           columnWidth,
           isCellHovered,
