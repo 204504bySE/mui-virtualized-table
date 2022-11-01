@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MultiGrid, { MultiGridProps } from 'react-virtualized/dist/commonjs/MultiGrid';
 import clsx from 'clsx';
@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination, { TablePaginationProps } from '@mui/material/TablePagination';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { ClassNameMap, Theme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 import Draggable from 'react-draggable';
 import { calcColumnWidth, Column, RowData } from './utils';
@@ -308,7 +308,7 @@ export default function MuiVirtualizedTable({
   ...other
 }: MultiGridProps & CellRendererType & {
   pagination: TablePaginationProps,
-  useStyles: (props?: any) => ClassNameMap<"table" | "cell" | "cellClickable" | "cellSelected" | "cellHovered" | "cellDisabled" | "cellContents" | "cellHeader" | "cellInLastColumn" | "cellInLastRow" | "footer" | "dragHandle" | "DragHandleActive" | "DragHandleIcon">
+  useStyles: any
 }) {
   const classes = useStyles({ classes: Classes });
   const theme = useTheme();
