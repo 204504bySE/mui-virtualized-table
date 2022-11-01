@@ -5,7 +5,7 @@ import Component from '@reactions/component';
 import Checkbox from '@mui/material/Checkbox';
 import MuiVirtualizedTable from '../dist/index.js';
 import { createPersonDataArray, createDessertData } from './data';
-import { withStyles } from '@mui/styles';
+import { withStyles } from 'tss-react/mui';
 
 storiesOf('Basic(Array)', module)
   .add('default (empty)', () => (
