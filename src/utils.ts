@@ -4,7 +4,7 @@ export type RowData = {[key: string]: ReactNode} | ReactNode[]
 
 export type Column = {
   name: string,
-  header?: ReactNode,
+  header?: ReactNode | ((index:number, name: string) => ReactNode),
   onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
   width?: number,
   minWidth?: number,

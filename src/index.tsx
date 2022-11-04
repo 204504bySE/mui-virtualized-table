@@ -168,9 +168,7 @@ const useCellRenderer = ({
       <div className={classes.cellContents}>
         <span style={{ flex: 'auto' }}>
           {isHeader
-            ? column.header != null
-              ? column.header
-              : column.name
+            ? (typeof column.header == "function" ? column.header(columnIndex, column.name) : column.header) ?? column.name
             : column.cell
             ? column.cell(rowData)
             : Array.isArray(rowData) 
