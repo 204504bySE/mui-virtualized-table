@@ -14,3 +14,4 @@ export const decorators = [
     </React.Fragment>
   )
 ];
+export const tags = ['autodocs'];

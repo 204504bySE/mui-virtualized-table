@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 
-export type RowData = {[key: string]: ReactNode} | ReactNode[]
+export type RowData = {[key: string]: ReactNode} | ReactNode[] | any
 
 export type Column = {
   name: string,
   header?: ReactNode | ((index:number, name: string) => ReactNode),
   onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
-  width?: number,
+  width?: number | string,
   minWidth?: number,
   cell?: (rowData: RowData) => ReactNode
   onClick?: any
@@ -15,8 +15,8 @@ export type Column = {
   resizable?: Boolean
 };
 
-export function calcColumnWidth(index: number, columns: Column[], tableWidth: number): number {
-  const column = columns[index];
+export function calcColumnWidth(index: number, columns: Column[] | undefined, tableWidth: number): number {
+  const column = columns?.at(index);
   if (!column) {
     return 0;
   }
@@ -27,15 +27,15 @@ export function calcColumnWidth(index: number, columns: Column[], tableWidth: nu
     return width;
   }
 
-  const totalAllocatedWidth = columns.reduce(
+  const totalAllocatedWidth = columns?.reduce(
     (result, c) => result + (getDeterministicColumnWidth(c, tableWidth) || 0),
     0
-  );
+  ) ?? 0;
 
   // Evenly distribute remaining width amoungst columns (accounting for minWidths)
-  const variableWidthColumns = columns.filter(
+  const variableWidthColumns = columns?.filter(
     c => typeof c.width !== 'number' && typeof c.width !== 'string'
-  );
+  ) ?? [];
   const initialDistributedWidthPerColumn =
     (tableWidth - totalAllocatedWidth) / variableWidthColumns.length;
   const activeMinWidthColumns = variableWidthColumns.filter(

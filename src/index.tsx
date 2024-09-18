@@ -12,12 +12,12 @@ import Draggable from 'react-draggable';
 import { calcColumnWidth, Column, RowData } from './utils';
 import { FOOTER_BORDER_HEIGHT, useDefaultStyles } from './style';
 
-const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, columns: any[]}) => {
+const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean | undefined, columns?: any[]}) => {
   var widths: {[key: string]: number} = {};
   if (resizable) {
     var initialWidth = 1;
     var columns: any[] = [];
-    Columns.forEach(c => {
+    Columns?.forEach(c => {
       if (c.width) {
         widths[c.name] = 0.1;
         initialWidth = initialWidth - 0.1;
@@ -33,30 +33,30 @@ const calculateWidths = ({ resizable, columns: Columns }: {resizable: Boolean, c
 };
 
 type CellRendererType = {
-    includeHeaders: Boolean
-    data: RowData[],
-    columns: Column[],
+    includeHeaders?: Boolean
+    data?: RowData[],
+    columns?: Column[],
     isCellHovered?: (column: Column, rowData: RowData, hoveredColumn: Column, hoveredRowData: RowData) => Boolean,
     isCellSelected?: (column: Column, rowData: RowData) => Boolean,
     isCellDisabled?: (column: Column, rowData: RowData) => Boolean,
-    classes: any,
-    cx: any,
+    classes?: any,
+    cx?: any,
     orderBy?: string,
     orderDirection?: 'desc' | 'asc',
     onHeaderClick?: false | ((event: React.MouseEvent<HTMLSpanElement, MouseEvent>, {column}: {column: Column}) => any),
-    onCellClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
-    onCellDoubleClick: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
-    onCellContextMenu: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
-    resizable: Boolean,
-    cellProps: any 
+    onCellClick?: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
+    onCellDoubleClick?: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
+    onCellContextMenu?: false | ((event: React.MouseEvent<HTMLTableCellElement, MouseEvent>, {column, rowData, data}: {column: Column, rowData: RowData, data: RowData[]}) => any),
+    resizable?: Boolean,
+    cellProps?: any 
 }
 
 const useCellRenderer = ({
   recomputeGridSize,
-  columns,
+  columns = [],
   width,
   includeHeaders,
-  data,
+  data = [],
   columnWidth,
   isCellHovered,
   isCellSelected,
@@ -277,10 +277,15 @@ const useCellRenderer = ({
   return { cellRenderer, columnWidth: getColumnWidth };
 };
 
+export type MuiVirtualizedTableProps = Partial<MultiGridProps> & CellRendererType & {
+    pagination?: TablePaginationProps,
+    useStyles?: any
+  };
+
 export default function MuiVirtualizedTable({
   data,
   columns,
-  width,
+  width = 0,
   height,
   maxHeight,
   pagination,
@@ -290,7 +295,7 @@ export default function MuiVirtualizedTable({
   rowHeight = 48,
   style,
   useStyles = useDefaultStyles,
-  columnWidth,
+  columnWidth = 0,
   includeHeaders = false,
   isCellHovered,
   isCellSelected,
@@ -305,10 +310,7 @@ export default function MuiVirtualizedTable({
   resizable,
   cellProps,
   ...other
-}: MultiGridProps & CellRendererType & {
-  pagination: TablePaginationProps,
-  useStyles: any
-}) {
+}: MuiVirtualizedTableProps) {
   const {classes, cx} = useStyles({ classes: Classes });
   const theme = useTheme();
 
