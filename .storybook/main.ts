@@ -15,7 +15,5 @@ const config: StorybookConfig = {
  typescript: {
   reactDocgen: 'react-docgen-typescript'
  },
-
- addons: ['@storybook/addon-webpack5-compiler-babel'],
 };
 export default config;

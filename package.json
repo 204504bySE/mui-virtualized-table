@@ -1,6 +1,6 @@
 {
     "name": "mui-virtualized-table-mui5",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "Material-UI table with windowing, row/column freezing, and more",
     "main": "dist/index.js",
     "types": "./dist/index.d.ts",
@@ -13,8 +13,8 @@
     "license": "MIT",
     "peerDependencies": {
         "@mui/material": "^5.0.0",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1"
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
     },
     "dependencies": {
         "prop-types": "^15.8.1",
@@ -37,10 +37,8 @@
         "@storybook/addon-essentials": "^8.3.1",
         "@storybook/addon-interactions": "^8.3.1",
         "@storybook/addon-links": "^8.3.1",
-        "@storybook/addon-webpack5-compiler-babel": "3.0.3",
         "@storybook/react": "^8.3.1",
         "@storybook/react-vite": "^8.3.1",
-        "@storybook/react-webpack5": "8.3.1",
         "@storybook/test": "8.3.1",
         "@types/react": "^18.3.7",
         "@types/react-dom": "^18.3.0",
